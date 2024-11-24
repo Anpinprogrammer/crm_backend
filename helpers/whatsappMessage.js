@@ -1,13 +1,8 @@
 import twilio from 'twilio';
-import {
-    accountSid, 
-    authToken,
-    fromWhatsapp
-} from '../config/whatsapp.js';
 
 const mensaje = async (datos) => {
 
-    const client = twilio(accountSid, authToken);
+    const client = twilio(process.env.ACCOUNTSID, process.env.AUTHTOKEN);
 
     const { numero, admin } = datos;
 
@@ -16,7 +11,7 @@ const mensaje = async (datos) => {
     try {
         const message = await client.messages.create({
             body: `Has sido agregado a la base de datos de la familia Pineda Motor's, te ha agregado ${admin}`,
-            from: fromWhatsapp,
+            from: process.env.FROMWHATSAPP,
             to: toWhatsapp
         });
         console.log('Mensaje enviado:', message.sid);
