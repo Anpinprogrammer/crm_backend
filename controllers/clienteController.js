@@ -1,4 +1,5 @@
 import Cliente from "../models/Cliente.js";
+import mensaje from "../helpers/whatsappMessage.js";
 
 const agregarCliente = async (req, res) => {
     const { email } = req.body;
@@ -12,6 +13,11 @@ const agregarCliente = async (req, res) => {
             cliente.admin = req.admin._id;
             const clienteGuardado = await cliente.save();
             console.log(clienteGuardado);
+            const datos = {
+                numero: cliente.telefono,
+                admin: req.admin.nombre
+            };
+            mensaje(datos);
     
             res.json(clienteGuardado);
         } catch (error) {
